@@ -1,4 +1,5 @@
-using backend.src.Repositories;
+using MainApi.Data;
+using MainApi.Repositories;
 using DotNetEnv;
 using Google.Apis.Bigquery.v2.Data;
 using Google.Cloud.BigQuery.V2;
@@ -40,7 +41,6 @@ builder.Services.AddAuthorization();
 DotNetEnv.Env.Load();
 
 builder.Services.AddSingleton<BigQueryClientFactory>();
-builder.Services.AddScoped<IBigQueryRepository, BigQueryRepository>();
 
 var app = builder.Build();
 
