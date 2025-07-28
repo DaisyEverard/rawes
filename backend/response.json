@@ -1,49 +1,372 @@
-"rawRow": {
-  "f": [
-    {
-      "v": "1",
-      "eTag": null
-    },
-    {
-      "v": "testName",
-      "eTag": null
-    },
-    {
-      "v": {
-        "f": [
-          [
+[
+  {
+    "rawRow": {
+      "f": [
+        {
+          "v": "1",
+          "eTag": null
+        },
+        {
+          "v": "testName",
+          "eTag": null
+        },
+        {
+          "v": {
+            "f": [
+              [
+                [
+                  []
+                ]
+              ],
+              [
+                [
+                  []
+                ]
+              ]
+            ]
+          },
+          "eTag": null
+        },
+        {
+          "v": [
             [
-              []
+              [
+                []
+              ]
+            ],
+            [
+              [
+                []
+              ]
             ]
           ],
-          [
-            [
-              []
-            ]
-          ]
-        ]
-      },
-      "eTag": null
-    },
-    {
-      "v": [
-        [
-          [
-            []
-          ]
-        ],
-        [
-          [
-            []
-          ]
-        ]
+          "eTag": null
+        },
+        {
+          "v": "2025-07-21",
+          "eTag": null
+        }
       ],
       "eTag": null
     },
-    {
-      "v": "2025-07-21",
+    "schema": {
+      "fields": [
+        {
+          "categories": null,
+          "collation": null,
+          "defaultValueExpression": null,
+          "description": null,
+          "fields": null,
+          "foreignTypeDefinition": null,
+          "maxLength": null,
+          "mode": "NULLABLE",
+          "name": "survey_id",
+          "policyTags": null,
+          "precision": null,
+          "rangeElementType": null,
+          "roundingMode": null,
+          "scale": null,
+          "type": "INTEGER",
+          "eTag": null
+        },
+        {
+          "categories": null,
+          "collation": null,
+          "defaultValueExpression": null,
+          "description": null,
+          "fields": null,
+          "foreignTypeDefinition": null,
+          "maxLength": null,
+          "mode": "NULLABLE",
+          "name": "wetland_name",
+          "policyTags": null,
+          "precision": null,
+          "rangeElementType": null,
+          "roundingMode": null,
+          "scale": null,
+          "type": "STRING",
+          "eTag": null
+        },
+        {
+          "categories": null,
+          "collation": null,
+          "defaultValueExpression": null,
+          "description": null,
+          "fields": [
+            {
+              "categories": null,
+              "collation": null,
+              "defaultValueExpression": null,
+              "description": null,
+              "fields": null,
+              "foreignTypeDefinition": null,
+              "maxLength": null,
+              "mode": "NULLABLE",
+              "name": "x",
+              "policyTags": null,
+              "precision": null,
+              "rangeElementType": null,
+              "roundingMode": null,
+              "scale": null,
+              "type": "FLOAT",
+              "eTag": null
+            },
+            {
+              "categories": null,
+              "collation": null,
+              "defaultValueExpression": null,
+              "description": null,
+              "fields": null,
+              "foreignTypeDefinition": null,
+              "maxLength": null,
+              "mode": "NULLABLE",
+              "name": "y",
+              "policyTags": null,
+              "precision": null,
+              "rangeElementType": null,
+              "roundingMode": null,
+              "scale": null,
+              "type": "FLOAT",
+              "eTag": null
+            }
+          ],
+          "foreignTypeDefinition": null,
+          "maxLength": null,
+          "mode": "NULLABLE",
+          "name": "gps_coordinates",
+          "policyTags": null,
+          "precision": null,
+          "rangeElementType": null,
+          "roundingMode": null,
+          "scale": null,
+          "type": "RECORD",
+          "eTag": null
+        },
+        {
+          "categories": null,
+          "collation": null,
+          "defaultValueExpression": null,
+          "description": null,
+          "fields": null,
+          "foreignTypeDefinition": null,
+          "maxLength": null,
+          "mode": "REPEATED",
+          "name": "assessors",
+          "policyTags": null,
+          "precision": null,
+          "rangeElementType": null,
+          "roundingMode": null,
+          "scale": null,
+          "type": "STRING",
+          "eTag": null
+        },
+        {
+          "categories": null,
+          "collation": null,
+          "defaultValueExpression": null,
+          "description": null,
+          "fields": null,
+          "foreignTypeDefinition": null,
+          "maxLength": null,
+          "mode": "NULLABLE",
+          "name": "date_completed",
+          "policyTags": null,
+          "precision": null,
+          "rangeElementType": null,
+          "roundingMode": null,
+          "scale": null,
+          "type": "DATE",
+          "eTag": null
+        }
+      ],
+      "foreignTypeInfo": null,
       "eTag": null
     }
-  ],
-  "eTag": null
-}
+  },
+  {
+    "rawRow": {
+      "f": [
+        {
+          "v": "2",
+          "eTag": null
+        },
+        {
+          "v": "example",
+          "eTag": null
+        },
+        {
+          "v": {
+            "f": [
+              [
+                [
+                  []
+                ]
+              ],
+              [
+                [
+                  []
+                ]
+              ]
+            ]
+          },
+          "eTag": null
+        },
+        {
+          "v": [
+            [
+              [
+                []
+              ]
+            ],
+            [
+              [
+                []
+              ]
+            ]
+          ],
+          "eTag": null
+        },
+        {
+          "v": "2025-04-04",
+          "eTag": null
+        }
+      ],
+      "eTag": null
+    },
+    "schema": {
+      "fields": [
+        {
+          "categories": null,
+          "collation": null,
+          "defaultValueExpression": null,
+          "description": null,
+          "fields": null,
+          "foreignTypeDefinition": null,
+          "maxLength": null,
+          "mode": "NULLABLE",
+          "name": "survey_id",
+          "policyTags": null,
+          "precision": null,
+          "rangeElementType": null,
+          "roundingMode": null,
+          "scale": null,
+          "type": "INTEGER",
+          "eTag": null
+        },
+        {
+          "categories": null,
+          "collation": null,
+          "defaultValueExpression": null,
+          "description": null,
+          "fields": null,
+          "foreignTypeDefinition": null,
+          "maxLength": null,
+          "mode": "NULLABLE",
+          "name": "wetland_name",
+          "policyTags": null,
+          "precision": null,
+          "rangeElementType": null,
+          "roundingMode": null,
+          "scale": null,
+          "type": "STRING",
+          "eTag": null
+        },
+        {
+          "categories": null,
+          "collation": null,
+          "defaultValueExpression": null,
+          "description": null,
+          "fields": [
+            {
+              "categories": null,
+              "collation": null,
+              "defaultValueExpression": null,
+              "description": null,
+              "fields": null,
+              "foreignTypeDefinition": null,
+              "maxLength": null,
+              "mode": "NULLABLE",
+              "name": "x",
+              "policyTags": null,
+              "precision": null,
+              "rangeElementType": null,
+              "roundingMode": null,
+              "scale": null,
+              "type": "FLOAT",
+              "eTag": null
+            },
+            {
+              "categories": null,
+              "collation": null,
+              "defaultValueExpression": null,
+              "description": null,
+              "fields": null,
+              "foreignTypeDefinition": null,
+              "maxLength": null,
+              "mode": "NULLABLE",
+              "name": "y",
+              "policyTags": null,
+              "precision": null,
+              "rangeElementType": null,
+              "roundingMode": null,
+              "scale": null,
+              "type": "FLOAT",
+              "eTag": null
+            }
+          ],
+          "foreignTypeDefinition": null,
+          "maxLength": null,
+          "mode": "NULLABLE",
+          "name": "gps_coordinates",
+          "policyTags": null,
+          "precision": null,
+          "rangeElementType": null,
+          "roundingMode": null,
+          "scale": null,
+          "type": "RECORD",
+          "eTag": null
+        },
+        {
+          "categories": null,
+          "collation": null,
+          "defaultValueExpression": null,
+          "description": null,
+          "fields": null,
+          "foreignTypeDefinition": null,
+          "maxLength": null,
+          "mode": "REPEATED",
+          "name": "assessors",
+          "policyTags": null,
+          "precision": null,
+          "rangeElementType": null,
+          "roundingMode": null,
+          "scale": null,
+          "type": "STRING",
+          "eTag": null
+        },
+        {
+          "categories": null,
+          "collation": null,
+          "defaultValueExpression": null,
+          "description": null,
+          "fields": null,
+          "foreignTypeDefinition": null,
+          "maxLength": null,
+          "mode": "NULLABLE",
+          "name": "date_completed",
+          "policyTags": null,
+          "precision": null,
+          "rangeElementType": null,
+          "roundingMode": null,
+          "scale": null,
+          "type": "DATE",
+          "eTag": null
+        }
+      ],
+      "foreignTypeInfo": null,
+      "eTag": null
+    }
+  }
+]
+
+[

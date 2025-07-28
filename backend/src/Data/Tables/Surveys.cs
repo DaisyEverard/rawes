@@ -2,7 +2,7 @@
 
 public class Surveys
 {
-    public string SurveyId { get; set; }
+    public int SurveyId { get; set; }
     public string WetlandName { get; set; }
     public float[] GPSCoordinates { get; set; }
 

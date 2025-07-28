@@ -1,11 +1,14 @@
-using MainApi.Data;
-using MainApi.Repositories;
 using DotNetEnv;
 using Google.Apis.Bigquery.v2.Data;
 using Google.Cloud.BigQuery.V2;
 using MainApi.Clients;
+using MainApi.Data;
+using MainApi.Data.Survey;
+using MainApi.Repositories;
 using Microsoft.AspNetCore.OpenApi;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Linq;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,28 +65,33 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/helloWorld", () =>
+app.MapGet("/getTable", () =>
 {
 
-    BigQueryClient client = BigQueryClient.Create("peerless-garage-466612-a2");
-    BigQueryTable table = client.GetTable("rawes", "surveys");
-    string sql = $"SELECT * FROM {table}";
-    //    BigQueryParameter[] parameters = new[]
+    BigQueryClient client = BigQueryClient.Create(Environment.GetEnvironmentVariable("GOOGLE_PROJECT"));
+    BigQueryTable table = client.GetTable(Environment.GetEnvironmentVariable("GOOGLE_DATASET"), Environment.GetEnvironmentVariable("GOOGLE_SURVEY_VIEW"));
+    //TableSchema schema = table.Schema;
+    //return Results.Ok(schema);
+
+    string sql = $"SELECT * FROM {table} WHERE survey_id = 1";
     BigQueryParameter[] parameters = null;
-//    {
-//    new BigQueryParameter("level", BigQueryDbType.Int64, 2),
-//    new BigQueryParameter("score", BigQueryDbType.Int64, 1500)
-//};
     BigQueryResults results = client.ExecuteQuery(sql, parameters);
-    foreach (BigQueryRow row in results)
-    {
-        Console.WriteLine($"{row}");
-    }
-
-
     return Results.Ok(results);
+
+    //var surveyDto = SurveyDTO.ConvertResultToSurveyDTO(results);
+    //return Results.Ok(surveyDto);
 })
-    .WithName("HelloWorld")
+    .WithName("getTable")
+    .WithOpenApi();
+
+app.MapGet("/getSchema", () =>
+{
+    BigQueryClient client = BigQueryClient.Create(Environment.GetEnvironmentVariable("GOOGLE_PROJECT"));
+    BigQueryTable table = client.GetTable(Environment.GetEnvironmentVariable("GOOGLE_DATASET"), Environment.GetEnvironmentVariable("GOOGLE_SURVEY_VIEW"));
+    TableSchema schema = table.Schema;
+    return Results.Ok(schema);
+})
+    .WithName("getSchema")
     .WithOpenApi();
 
 app.MapControllers();
