@@ -5,13 +5,13 @@ public class SurveyRowDTO
     public string Benefit { get; set; }
     public string BenefitType { get; set; }
     public float Importance { get; set; }
-    public string[] Scales { get; set; }
+    public List<string> Scales { get; set; }
     public string Description { get; set; }
 
     public SurveyRowDTO(string benefit,
         string benefitType,
         float importance,
-        string[] scales,
+        List<string> scales,
         string description)
     {
         Benefit = benefit;

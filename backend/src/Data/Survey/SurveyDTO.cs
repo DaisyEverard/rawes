@@ -20,9 +20,6 @@ public class SurveyDTO
         DateCompleted = date_completed;
         Rows = rows;
     }
-
-    //https://cloud.google.com/dotnet/docs/reference/Google.Cloud.BigQuery.V2/latest/Google.Cloud.BigQuery.V2.TableSchemaBuilder
-
     //public Task<SurveyDTO> ConvertResultToSurveyDTO(BigQueryResults results)
     //{
     //    var rows = new List<SurveyRowDTO>();

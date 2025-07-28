@@ -7,23 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="src\Data\AllSurveys\schema.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="src\Data\AllSurveys\schema.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="DotNetEnv" Version="3.1.1" />
     <PackageReference Include="Google.Cloud.BigQuery.V2" Version="3.11.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.18" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.7" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="src\Controllers\" />
   </ItemGroup>
 
 </Project>

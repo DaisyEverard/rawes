@@ -1,7 +1,7 @@
+using MainApi.Clients;
 using DotNetEnv;
 using Google.Apis.Bigquery.v2.Data;
 using Google.Cloud.BigQuery.V2;
-using MainApi.Clients;
 using MainApi.Data;
 using MainApi.Data.Survey;
 using MainApi.Repositories;
@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.OpenApi;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Linq;
 using System.Text.Json;
+using MainApi.Controllers;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -65,37 +67,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/getTable", () =>
-{
+SurveysController controller = new SurveysController(app);
+controller.MapEndpoints(app);
 
-    BigQueryClient client = BigQueryClient.Create(Environment.GetEnvironmentVariable("GOOGLE_PROJECT"));
-    BigQueryTable table = client.GetTable(Environment.GetEnvironmentVariable("GOOGLE_DATASET"), Environment.GetEnvironmentVariable("GOOGLE_SURVEY_VIEW"));
-    //TableSchema schema = table.Schema;
-    //return Results.Ok(schema);
-
-    string sql = $"SELECT * FROM {table} WHERE survey_id = 1";
-    BigQueryParameter[] parameters = null;
-    BigQueryResults results = client.ExecuteQuery(sql, parameters);
-    return Results.Ok(results);
-
-    //var surveyDto = SurveyDTO.ConvertResultToSurveyDTO(results);
-    //return Results.Ok(surveyDto);
-})
-    .WithName("getTable")
-    .WithOpenApi();
-
-app.MapGet("/getSchema", () =>
-{
-    BigQueryClient client = BigQueryClient.Create(Environment.GetEnvironmentVariable("GOOGLE_PROJECT"));
-    BigQueryTable table = client.GetTable(Environment.GetEnvironmentVariable("GOOGLE_DATASET"), Environment.GetEnvironmentVariable("GOOGLE_SURVEY_VIEW"));
-    TableSchema schema = table.Schema;
-    return Results.Ok(schema);
-})
-    .WithName("getSchema")
-    .WithOpenApi();
-
-app.MapControllers();
-//xEndpoints.MapXendpoints(app)
 
 app.Run();
 
