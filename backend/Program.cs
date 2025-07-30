@@ -1,15 +1,11 @@
 using MainApi.Clients;
 using DotNetEnv;
-using Google.Apis.Bigquery.v2.Data;
+using MainApi.Controllers;
 using Google.Cloud.BigQuery.V2;
 using MainApi.Data;
 using MainApi.Data.Survey;
 using MainApi.Repositories;
-using Microsoft.AspNetCore.OpenApi;
-using Microsoft.OpenApi.Models;
-using Newtonsoft.Json.Linq;
-using System.Text.Json;
-using MainApi.Controllers;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
