@@ -22,8 +22,8 @@ public class SurveysController
 
             BigQueryParameter[] nullParameters = null;
             BigQueryResults metadata = client.ExecuteQuery(SurveyQueries.GetMetadataSql(allSurveysTable, surveyID), nullParameters);
-            BigQueryResults assessors = client.ExecuteQuery(SurveyQueries.GetAssessorsSql(allRowsTable, surveyID), nullParameters);
-            BigQueryResults rows = client.ExecuteQuery(SurveyQueries.GetRowsSql(allSurveysTable, surveyID), nullParameters);
+            BigQueryResults assessors = client.ExecuteQuery(SurveyQueries.GetAssessorsSql(allSurveysTable, surveyID), nullParameters);
+            BigQueryResults rows = client.ExecuteQuery(SurveyQueries.GetRowsSql(allRowsTable, surveyID), nullParameters);
             BigQueryResults scales = client.ExecuteQuery(SurveyQueries.GetScalesSql(allRowsTable, surveyID), nullParameters);
 
             var surveyRows = new List<string>();
