@@ -1,6 +1,7 @@
-﻿using Google.Cloud.BigQuery.V2;
-using MainApi.Data.Survey;
+﻿using Google.Apis.Bigquery.v2.Data;
+using Google.Cloud.BigQuery.V2;
 using MainApi.Data.Queries;
+using MainApi.Data.Survey;
 
 namespace MainApi.Controllers;
 
@@ -21,31 +22,31 @@ public class SurveysController
             int surveyID = 1;
 
             BigQueryParameter[] nullParameters = null;
-            BigQueryResults metadata = client.ExecuteQuery(SurveyQueries.GetMetadataSql(allSurveysTable, surveyID), nullParameters);
-            BigQueryResults assessors = client.ExecuteQuery(SurveyQueries.GetAssessorsSql(allSurveysTable, surveyID), nullParameters);
-            BigQueryResults rows = client.ExecuteQuery(SurveyQueries.GetRowsSql(allRowsTable, surveyID), nullParameters);
-            BigQueryResults scales = client.ExecuteQuery(SurveyQueries.GetScalesSql(allRowsTable, surveyID), nullParameters);
+            BigQueryResults metadataResult = client.ExecuteQuery(BigQueryQueries.GetMetadataSql(allSurveysTable, surveyID), nullParameters);
+            BigQueryResults assessorsResult = client.ExecuteQuery(BigQueryQueries.GetAssessorsSql(allSurveysTable, surveyID), nullParameters);
+            BigQueryResults rowsResult = client.ExecuteQuery(BigQueryQueries.GetRowsSql(allRowsTable, surveyID), nullParameters);
+            BigQueryResults scalesResult = client.ExecuteQuery(BigQueryQueries.GetScalesSql(allRowsTable, surveyID), nullParameters);
 
             var surveyRows = new List<string>();
 
             // METADATA
-            BigQueryRow metadataRow = metadata.First();
+            BigQueryRow metadataRow = metadataResult.First();
             string wetlandName = (string)metadataRow["wetland_name"];
             double gpsX = (double)metadataRow["gps_x"];
             double gpsY = (double)metadataRow["gps_y"];
-            GPSCoordinates gpsCoordinates = new GPSCoordinates(gpsX, gpsY);
+            var gpsCoordinates = new GPSCoordinates { x = gpsX, y = gpsY };
             DateTime rawDate = (DateTime)metadataRow["date_completed"];
             DateOnly dateCompleted = DateOnly.FromDateTime(rawDate);
 
 
             // ASSESSORS
-            List<string> assessorList = assessors
+            List<string> assessorList = assessorsResult
             .Select(r => (string)r["a"])
             .ToList();
 
             // ROWS
-            var benefitRows = rows.ToList();
-            var scaleRows = scales.ToList();
+            var benefitRows = rowsResult.ToList();
+            var scaleRows = scalesResult.ToList();
 
             var surveyRowDtos = new List<SurveyRowDTO>();
 
@@ -56,24 +57,38 @@ public class SurveysController
                 double importance = (double)benefitRow["importance"];
                 string description = (string)benefitRow["description"];
 
-                
-
-                List<string> matchedScales = new List<string>();
+                List<string> scales = new List<string>();
                 foreach (var scaleRow in scaleRows)
                 {
                     if ((string)scaleRow["benefit"] == benefit)
                     {
                         var sStruct = (Dictionary<string, object>)scaleRow["s"];
                         string scaleValue = (string)sStruct["scale"];
-                        matchedScales.Add(scaleValue);
+                        scales.Add(scaleValue);
                     }
                 }
 
-                var dto = new SurveyRowDTO(benefit, benefitType, importance, matchedScales, description);
-                surveyRowDtos.Add(dto);
+                var rowDto = new SurveyRowDTO
+                {
+                    Benefit = benefit,
+                    BenefitType = benefitType,
+                    Importance = importance,
+                    Scales = scales,
+                    Description = description
+                };
+                surveyRowDtos.Add(rowDto);
             }
 
-            var survey = new SurveyDTO(surveyID, wetlandName, gpsCoordinates, assessorList, dateCompleted, surveyRowDtos);
+            var survey = new SurveyDTO
+            {
+                SurveyId = surveyID,
+                WetlandName = wetlandName,
+                GPSCoordinates = gpsCoordinates,
+                Assessors = assessorList,
+                DateCompleted = dateCompleted,
+                Rows = surveyRowDtos
+            };
+
             return Results.Ok(survey);
         })
     .WithName("getTable")

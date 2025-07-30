@@ -2,7 +2,7 @@
 
 namespace MainApi.Data.Queries;
 
-static class SurveyQueries
+static class BigQueryQueries
 {
     public static string GetMetadataSql(BigQueryTable allSurveysTable, int surveyID)
     {

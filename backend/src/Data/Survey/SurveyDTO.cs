@@ -4,22 +4,12 @@ namespace MainApi.Data.Survey;
 
 public class SurveyDTO
 {
-    public int SurveyId { get; set; }
-    public string WetlandName { get; set; }
-    public GPSCoordinates GPSCoordinates { get; set; }
-    public List<string> Assessors { get; set; }
-    public DateOnly DateCompleted { get; set; }
-    public List<SurveyRowDTO> Rows { get; set; }
-
-    public SurveyDTO(int survey_id, string wetland_name, GPSCoordinates gps_coordinates, List<string> assessors, DateOnly date_completed, List<SurveyRowDTO> rows)
-    {
-        SurveyId = survey_id;
-        WetlandName = wetland_name;
-        GPSCoordinates = gps_coordinates;
-        Assessors = assessors;
-        DateCompleted = date_completed;
-        Rows = rows;
-    }
+    public required int SurveyId { get; set; }
+    public required string WetlandName { get; set; }
+    public required GPSCoordinates GPSCoordinates { get; set; }
+    public required List<string> Assessors { get; set; }
+    public required DateOnly DateCompleted { get; set; }
+    public required List<SurveyRowDTO> Rows { get; set; }
 
     //public static Task<SurveyDTO> ConvertResultsToSurvey() { }
 
