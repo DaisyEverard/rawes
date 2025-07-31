@@ -5,11 +5,11 @@ namespace MainApi.Data.Survey;
 
 public class SurveyDTO
 {
-    public required int SurveyId { get; set; }
+    public int SurveyId { get; set; }
     public required string WetlandName { get; set; }
     public required GPSCoordinates GPSCoordinates { get; set; }
     public required List<string> Assessors { get; set; }
-    public required DateOnly DateCompleted { get; set; }
+    public required DateTime DateCompleted { get; set; }
     public required List<SurveyRowDTO> Rows { get; set; }
 
     public static SurveyDTO ConvertResultsToSurvey(int surveyID, BigQueryResults metadataResult, BigQueryResults assessorsResult,
@@ -23,8 +23,7 @@ public class SurveyDTO
         double gpsX = (double)metadataRow["gps_x"];
         double gpsY = (double)metadataRow["gps_y"];
         var gpsCoordinates = new GPSCoordinates { x = gpsX, y = gpsY };
-        DateTime rawDate = (DateTime)metadataRow["date_completed"];
-        DateOnly dateCompleted = DateOnly.FromDateTime(rawDate);
+        DateTime dateCompleted = (DateTime)metadataRow["date_completed"];
 
 
         // ASSESSORS
