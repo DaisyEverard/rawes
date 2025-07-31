@@ -40,6 +40,12 @@ public class SurveyDTO
 
         foreach (var benefitRow in benefitRows)
         {
+            foreach (var field in benefitRow.Schema.Fields)
+            {
+                var name = field.Name;
+                var value = benefitRow[name];
+                Console.WriteLine($"{name}: {value}");
+            }
             string benefit = (string)benefitRow["benefit"];
             string benefitType = (string)benefitRow["benefit_type"];
             double importance = (double)benefitRow["importance"];

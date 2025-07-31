@@ -4,7 +4,7 @@ namespace MainApi.Data.Queries;
 
 static class BigQueryQueries
 {
-    public static string GetMetadataSql(BigQueryTable allSurveysTable, int surveyID)
+    public static string GetMetadataSql(BigQueryTable allSurveysTable)
     {
         return $"""
             SELECT
@@ -13,22 +13,22 @@ static class BigQueryQueries
                 gps_coordinates.y as gps_y,
                 date_completed
             FROM {allSurveysTable}
-            WHERE survey_id = {surveyID}
+            WHERE survey_id = @survey_id
             LIMIT 1
         """;
     }
 
-    public static string GetAssessorsSql(BigQueryTable allSurveysTable, int surveyID)
+    public static string GetAssessorsSql(BigQueryTable allSurveysTable)
     {
         return $"""
             SELECT 
                 a
             FROM {allSurveysTable} s, UNNEST(s.assessors) AS a
-            WHERE survey_id = {surveyID}
+            WHERE survey_id = @survey_id
         """;
     }
 
-    public static string GetRowsSql(BigQueryTable allRowsTable, int surveyID)
+    public static string GetRowsSql(BigQueryTable allRowsTable)
     {
         return $"""
             SELECT
@@ -37,18 +37,18 @@ static class BigQueryQueries
                 description,
                 importance
             FROM {allRowsTable}
-            WHERE survey_id = {surveyID}
+            WHERE survey_id = @survey_id
         """;
     }
 
-    public static string GetScalesSql(BigQueryTable allRowsTable, int surveyID)
+    public static string GetScalesSql(BigQueryTable allRowsTable)
     {
         return $"""
             SELECT
                 benefit,
                 s
             FROM {allRowsTable} r, UNNEST(r.scale) AS s
-            WHERE survey_id = {surveyID}
+            WHERE @survey_id = @survey_id
         """;
     }
 }
