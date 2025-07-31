@@ -66,3 +66,68 @@ gps_coordinates,
 assessors,
 date_completed
 ```
+
+## Stored procedure to insert a new row
+```
+CREATE OR REPLACE PROCEDURE rawes.new_survey(
+  new_benefit STRING,
+  new_importance FLOAT64,
+  scales ARRAY<STRING>,
+  description STRING
+)
+BEGIN
+  DECLARE new_row_id INT64;
+  DECLARE new_survey_id INT64;
+  DECLARE new_benefit_id INT64;
+  DECLARE scale_ids ARRAY<INT64>;
+
+  SET new_row_id = (
+    SELECT IFNULL(MAX(row_id), 0) + 1 FROM `rawes.survey_rows`
+  );
+  SET new_survey_id = (
+    SELECT IFNULL(MAX(survey_id), 0) + 1 FROM `rawes.surveys`
+  );
+  SET new_benefit_id = (
+    SELECT benefit_id FROM `rawes.benefits`
+    WHERE benefit = new_benefit
+    LIMIT 1
+  );
+  SET scale_ids = (
+    SELECT ARRAY_AGG(scale_id)
+    FROM `rawes.scales`
+    WHERE scale IN UNNEST(scales)
+  );
+
+  INSERT INTO `rawes.survey_rows` (row_id, survey_id, benefit_id, importance, scale_ids, description)
+  VALUES (new_row_id, new_survey_id, new_benefit_id, new_importance, scale_ids, description);
+END;
+```
+
+## new survey procedure
+```
+CREATE OR REPLACE PROCEDURE rawes.new_survey(
+  new_survey_id INT64,
+  new_wetland_name STRING,
+  new_gps_x FLOAT64,
+  new_gps_y FLOAT64,
+  new_assessors ARRAY<STRING>,
+  new_date_completed DATE
+)
+BEGIN
+  DECLARE new_row_id INT64;
+  DECLARE gps_coordinates STRUCT<x FLOAT64, y FLOAT64>;
+
+  SET gps_coordinates = STRUCT(new_gps_x AS x, new_gps_y AS y);
+
+  INSERT INTO `rawes.surveys` (survey_id, wetland_name, gps_coordinates, assessors, date_completed)
+  VALUES (new_survey_id, new_wetland_name, gps_coordinates, new_assessors, new_date_completed);
+END;
+```
+## get new survey_id procedure
+
+```
+CREATE OR REPLACE PROCEDURE rawes.new_survey_id()
+BEGIN
+  SELECT IFNULL(MAX(survey_id), 0) + 1 FROM `rawes.surveys`;
+END;
+```
