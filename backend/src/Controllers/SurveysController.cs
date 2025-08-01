@@ -17,7 +17,7 @@ public class SurveysController
     }
 
     public void MapEndpoints(WebApplication app) {
-        app.MapGet("/getTable", ([FromQuery] int surveyID) =>
+        app.MapGet("survey/{surveyID}", ([FromQuery] int surveyID) =>
         {
             BigQueryClient client = BigQueryClient.Create(Environment.GetEnvironmentVariable("GOOGLE_PROJECT"));
             BigQueryTable allSurveysTable = client.GetTable(Environment.GetEnvironmentVariable("GOOGLE_DATASET"), Environment.GetEnvironmentVariable("GOOGLE_SURVEY_VIEW"));
@@ -40,7 +40,7 @@ public class SurveysController
         .WithName("getTable")
         .WithOpenApi();
 
-        app.MapPost("/newSurvey", (SurveyDTO survey) =>{
+        app.MapPost("survey/new", (SurveyDTO survey) =>{
             BigQueryClient client = BigQueryClient.Create(Environment.GetEnvironmentVariable("GOOGLE_PROJECT"));
             BigQueryTable allSurveysTable = client.GetTable(Environment.GetEnvironmentVariable("GOOGLE_DATASET"), Environment.GetEnvironmentVariable("GOOGLE_SURVEY_VIEW"));
             BigQueryParameter[] nullParameters = null;
@@ -97,6 +97,25 @@ public class SurveysController
             return Results.Ok(newSurveyResult);
         })
         .WithName("newSurvey")
+        .WithOpenApi();
+
+        app.MapDelete("survey/delete/{surveyID}", (string surveyID) => {
+            BigQueryClient client = BigQueryClient.Create(Environment.GetEnvironmentVariable("GOOGLE_PROJECT"));
+
+            string deleteSql = @"
+                CALL rawes.delete_survey(
+                    @survey_id
+                );";
+
+            var deleteParameters = new List<BigQueryParameter>
+                {
+                    new BigQueryParameter("survey_id", BigQueryDbType.String, surveyID),
+                };
+
+            var result = client.ExecuteQuery(deleteSql, deleteParameters);
+            return Results.Ok(result);
+        })
+        .WithName("deleteSurvey")
         .WithOpenApi();
     }
 }
